@@ -38,7 +38,7 @@ Generic MCP client config:
 | `get_catalog` | Browse the full record catalog with filters | Free |
 | `get_record` | Fetch any single record by id | from $0.01 |
 | `lookup_entity` | Company and entity identifier lookup | $0.01 |
-| `screen_entity` | Sanctions and debarment screening across ten authorities (OFAC, UN, EU, UK, FBI, World Bank, HHS OIG, SAM exclusions and more), over 280,000 listed parties, full audit receipt | $0.08 |
+| `screen_entity` | Sanctions and debarment screening across eleven authorities (OFAC, UN, EU, UK, FBI, World Bank, HHS OIG, SAM exclusions, Federal Reserve enforcement actions and more), over 280,000 listed parties, full audit receipt | $0.08 |
 | `is_cve_exploited` | Check whether a CVE is actively exploited in the wild | $0.08 |
 | `search_sec_filings` | SEC EDGAR filings and enforcement | $0.05 |
 | `search_legal_cases` | 1.5M+ federal court opinions (SCOTUS all time, all 13 circuits) | $0.05 |
