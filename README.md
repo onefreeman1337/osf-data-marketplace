@@ -1,6 +1,6 @@
 # OSF Data Marketplace
 
-**Provenance stamped US government and scientific data for AI agents. 4.8 million records across 78 official sources, sold per call with x402 USDC micropayments on Base.**
+**Provenance stamped US government and scientific data for AI agents. Over 5 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
 
 OSF (Open Source Filings) is a live remote MCP server plus an x402 HTTP API. There is nothing to install and nothing to sign up for: an agent with a funded wallet can discover the catalog, get a price quote, pay in USDC, and receive records with full provenance in a single round trip.
 
@@ -37,7 +37,7 @@ Generic MCP client config:
 |---|---|---|
 | `get_catalog` | Browse the full record catalog with filters | Free |
 | `get_record` | Fetch any single record by id | from $0.01 |
-| `lookup_entity` | Company and entity identifier lookup | $0.01 |
+| `lookup_entity` | Company and entity identifier lookup (NPI, LEI, FDIC cert, CIK, EIN) | $0.01 |
 | `screen_entity` | Sanctions and debarment screening across eleven authorities (OFAC, UN, EU, UK, FBI, World Bank, HHS OIG, SAM exclusions, Federal Reserve enforcement actions and more), over 291,000 listed parties, full audit receipt | $0.08 |
 | `is_cve_exploited` | Check whether a CVE is actively exploited in the wild | $0.08 |
 | `check_broker` | Live FINRA BrokerCheck disciplinary lookup of a stockbroker, investment adviser, or brokerage firm: CRD number, registration status, disclosure flags, permanent bar status, employers, and a FINRA provenance URL per match | $0.08 |
@@ -63,7 +63,7 @@ Every record carries a provenance stamp: the originating authority, source URL, 
 
 ## Data
 
-78 official sources including SEC EDGAR, CourtListener, arXiv, PubMed, openFDA, CISA, the CVE Program, OFAC, SAM.gov, USAspending, Federal Register, FRED, NOAA and EPA. The warehouse refreshes continuously via a collector fleet with daily missions per source.
+80 official sources including SEC EDGAR, CourtListener, arXiv, PubMed, openFDA, CISA, the CVE Program, OFAC, SAM.gov, USAspending, the Senate Lobbying Disclosure Act database, the IRS Exempt Organizations Business Master File, Federal Register, FRED, NOAA and EPA. The warehouse refreshes continuously via a collector fleet with daily missions per source.
 
 ## License
 
