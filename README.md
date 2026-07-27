@@ -1,6 +1,6 @@
 # OSF Data Marketplace
 
-**Provenance stamped US government and scientific data for AI agents. Over 5 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
+**Provenance stamped US government and scientific data for AI agents. Over 7 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
 
 OSF (Open Source Filings) is a live remote MCP server plus an x402 HTTP API. There is nothing to install and nothing to sign up for: an agent with a funded wallet can discover the catalog, get a price quote, pay in USDC, and receive records with full provenance in a single round trip.
 
