@@ -1,6 +1,6 @@
 # OSF Data Marketplace
 
-**Provenance stamped US government and scientific data for AI agents. Over 7 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
+**Provenance stamped US government and scientific data for AI agents. Over 7.3 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
 
 OSF (Open Source Filings) is a live remote MCP server plus an x402 HTTP API. There is nothing to install and nothing to sign up for: an agent with a funded wallet can discover the catalog, get a price quote, pay in USDC, and receive records with full provenance in a single round trip.
 
@@ -31,29 +31,48 @@ Generic MCP client config:
 }
 ```
 
-## Tools (19)
+## Screen a counterparty in one call
+
+```bash
+curl "https://api.osf-master-server.com/x402/screen/sanctions/Gazprombank?format=json"
+```
+
+$0.05. Eleven authorities, 291,000+ listed parties, a provenance URL per match and a sha256 audit receipt. Branch on three outcomes, never two:
+
+| `result` | Meaning |
+|---|---|
+| `POTENTIAL_MATCH` | One or more listed parties matched. Read `matches[]` for the list, the match basis, the sanctions program and the official source URL. |
+| `NO_MATCH` | A **complete** screen found nothing. This is the only clearance, and it is returned only when `screen_complete` is true. |
+| `INCOMPLETE_SCREEN` | At least one list could not be fully examined, named in `incomplete_lists`, and `screen_complete` is false. **Not a clearance.** |
+
+Open Source Filings will not certify a negative it cannot prove. `NO_MATCH` is returned only when the complete candidate set on all 11 authority lists was examined. Every response carries per list `candidate_set_complete` flags, `candidates_examined`, `records_in_scope`, and a sha256 receipt you can retain as evidence of what was checked and when.
+
+## Tools (20)
+
+**14 of the 20 tools are free.** `get_catalog` and all 13 `search_*` tools take no payment at all: they return record_ids, live per record prices and provenance URLs, so an agent can confirm the data it needs exists before spending anything. Only the 6 tools marked with a price charge.
 
 | Tool | What it does | Price (USDC) |
 |---|---|---|
 | `get_catalog` | Browse the full record catalog with filters | Free |
-| `get_record` | Fetch any single record by id | from $0.01 |
-| `lookup_entity` | Company and entity identifier lookup (NPI, LEI, FDIC cert, CIK, EIN) | $0.01 |
-| `screen_entity` | Sanctions and debarment screening across eleven authorities (OFAC, UN, EU, UK, FBI, World Bank, HHS OIG, SAM exclusions, Federal Reserve enforcement actions and more), over 291,000 listed parties, full audit receipt | $0.08 |
-| `is_cve_exploited` | Check whether a CVE is actively exploited in the wild | $0.08 |
-| `check_broker` | Live FINRA BrokerCheck disciplinary lookup of a stockbroker, investment adviser, or brokerage firm: CRD number, registration status, disclosure flags, permanent bar status, employers, and a FINRA provenance URL per match | $0.08 |
-| `search_sec_filings` | SEC EDGAR filings and enforcement | $0.05 |
-| `search_legal_cases` | 1.55M+ federal court opinions (SCOTUS all time, all 13 circuits) plus SEC litigation and administrative proceedings | $0.05 |
-| `search_research_papers` | 1.2M+ scholarly works incl. arXiv, PubMed, Crossref | $0.05 |
-| `search_cyber_threats` | CVE corpus, CISA advisories, ATT&CK | $0.05 |
-| `search_healthcare` | Provider data, FDA drug and device recalls to 2004 | $0.05 |
-| `search_consumer_protection` | Recalls and consumer enforcement | $0.05 |
-| `search_gov_spending` | Federal awards and spending | $0.05 |
-| `search_regulations_law` | eCFR, Federal Register, Congress.gov legislation, Regulations.gov dockets, GovInfo | $0.05 |
-| `search_economic_indicators` | FRED, BLS, Census, World Bank series | $0.05 |
-| `search_environmental_data` | EPA, NOAA and related environmental records | $0.05 |
-| `search_patents` | Granted US patents (USPTO Open Data Portal): prior art, assignee and inventor lookup, freedom to operate | $0.05 |
-| `search_aircraft_registry` | FAA civil aircraft registrations: tail number (N number), registered owner, asset tracing | $0.05 |
-| `search_ai_models` | Hugging Face model metadata: task, library, declared license, download counts, model selection | $0.05 |
+| `search_sec_filings` | SEC EDGAR filings, 13F, Form 4, XBRL, enforcement | Free |
+| `search_legal_cases` | 1.55M+ federal court opinions (SCOTUS all time, all 13 circuits) plus SEC litigation and administrative proceedings | Free |
+| `search_research_papers` | 1.2M+ scholarly works incl. arXiv, PubMed, Crossref | Free |
+| `search_cyber_threats` | NVD CVE corpus, CISA advisories, KEV, EPSS, CWE, ATT&CK | Free |
+| `search_healthcare` | CMS NPI providers, RxNorm, clinical trials, FDA recalls since 2004 | Free |
+| `search_consumer_protection` | CFPB complaints, NHTSA, CPSC and FDA recall enforcement | Free |
+| `search_gov_spending` | USAspending awards, SAM.gov solicitations, Grants.gov funding | Free |
+| `search_regulations_law` | eCFR, Federal Register, Congress.gov legislation, Regulations.gov dockets, GovInfo | Free |
+| `search_economic_indicators` | FRED, Treasury, BEA, BLS, Census, World Bank series | Free |
+| `search_environmental_data` | USGS, NOAA, EPA, FEMA, GBIF records | Free |
+| `search_patents` | Granted US patents (USPTO Open Data Portal): prior art, assignee and inventor lookup, freedom to operate | Free |
+| `search_aircraft_registry` | FAA civil aircraft registrations: tail number (N number), registered owner, asset tracing | Free |
+| `search_ai_models` | Hugging Face model metadata: task, library, declared license, download counts | Free |
+| `sample_record` | Sample any single record in full, the cheapest door into the catalog | $0.001 |
+| `screen_entity` | Sanctions and debarment screening across eleven authorities (OFAC SDN and Consolidated, EU, UK OFSI, UN, Trade.gov CSL, FBI Wanted, World Bank, HHS OIG, SAM exclusions, Federal Reserve enforcement), 291,000+ listed parties, provable negative, sha256 audit receipt | $0.05 |
+| `lookup_entity` | Company and entity identifier lookup (NPI, LEI, FDIC cert, CIK, EIN) | $0.05 |
+| `is_cve_exploited` | Check whether a CVE is actively exploited in the wild (CISA KEV) with EPSS and CVSS | $0.05 |
+| `check_broker` | Live FINRA BrokerCheck disciplinary lookup of a stockbroker, investment adviser, or brokerage firm: CRD number, registration status, disclosure flags, permanent bar status, employers, and a FINRA provenance URL per match | $0.05 |
+| `get_record` | Fetch any single record by id in full | from $0.02 |
 
 ## How payment works
 
