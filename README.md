@@ -1,6 +1,8 @@
 # OSF Data Marketplace
 
-**Provenance stamped US government and scientific data for AI agents. Over 7.3 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
+**Provenance stamped US government and scientific data for AI agents. Over 7.5 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
+
+**Install in one paste:** `https://api.osf-master-server.com/mcp` — remote MCP, no key, no account, and 14 of the 20 tools are free. [Jump to your client](#install).
 
 OSF (Open Source Filings) is a live remote MCP server plus an x402 HTTP API. There is nothing to install and nothing to sign up for: an agent with a funded wallet can discover the catalog, get a price quote, pay in USDC, and receive records with full provenance in a single round trip.
 
@@ -10,26 +12,134 @@ OSF (Open Source Filings) is a live remote MCP server plus an x402 HTTP API. The
 - **llms.txt:** [`https://api.osf-master-server.com/llms.txt`](https://api.osf-master-server.com/llms.txt)
 - **Website:** [`https://osf-master-server.com`](https://osf-master-server.com)
 
-## Connect
+## Install
 
-Claude Code:
+OSF is a **remote** MCP server over streamable HTTP. Nothing to download, nothing to run, no API key, no account.
+
+```
+https://api.osf-master-server.com/mcp
+```
+
+**14 of the 20 tools are free.** Install it, ask it real questions, and decide whether it is worth funding a wallet. Every block below is the complete config for that client. Pick yours, paste it, done.
+
+### Claude Code
 
 ```bash
 claude mcp add --transport http osf https://api.osf-master-server.com/mcp
 ```
 
-Generic MCP client config:
+Confirm with `claude mcp list`. You should see `osf: https://api.osf-master-server.com/mcp (HTTP) - ✔ Connected`.
+
+### Claude Desktop and claude.ai
+
+Settings → **Connectors** → **Add** → **Add custom connector**, then paste `https://api.osf-master-server.com/mcp`.
+
+Remote servers do **not** go in `claude_desktop_config.json`. That file is only for local stdio servers, so pasting a URL into it will silently do nothing.
+
+### Cursor — `~/.cursor/mcp.json`
 
 ```json
 {
   "mcpServers": {
     "osf": {
-      "type": "streamable-http",
       "url": "https://api.osf-master-server.com/mcp"
     }
   }
 }
 ```
+
+### VS Code — `.vscode/mcp.json`
+
+```json
+{
+  "servers": {
+    "osf": {
+      "type": "http",
+      "url": "https://api.osf-master-server.com/mcp"
+    }
+  }
+}
+```
+
+### Cline — `cline_mcp_settings.json`
+
+```json
+{
+  "mcpServers": {
+    "osf": {
+      "type": "streamableHttp",
+      "url": "https://api.osf-master-server.com/mcp",
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+
+### Windsurf — `~/.codeium/windsurf/mcp_config.json`
+
+```json
+{
+  "mcpServers": {
+    "osf": {
+      "serverUrl": "https://api.osf-master-server.com/mcp"
+    }
+  }
+}
+```
+
+### Python, no MCP client needed
+
+```bash
+pip install mcp
+```
+
+```python
+import asyncio
+from mcp import ClientSession
+from mcp.client.streamable_http import streamablehttp_client
+
+async def main():
+    async with streamablehttp_client("https://api.osf-master-server.com/mcp") as (r, w, _):
+        async with ClientSession(r, w) as s:
+            await s.initialize()
+            out = await s.call_tool("search_cyber_threats", {"query": "log4j remote code execution"})
+            print(out.content[0].text)
+
+asyncio.run(main())
+```
+
+That call is free. Swap `search_cyber_threats` for any of the other 12 `search_*` tools, or for `screen_entity` when you want the paid sanctions screen.
+
+### LangChain and LangGraph
+
+```bash
+pip install langchain-mcp-adapters "mcp<2"
+```
+
+> The `mcp<2` pin matters. As of `langchain-mcp-adapters` 0.3.1 a plain install resolves `mcp` 2.0.0 and the import fails with `ImportError: cannot import name 'RequestContext' from 'mcp.shared.context'`. Pinning below 2.0 fixes it.
+
+```python
+import asyncio
+from langchain_mcp_adapters.client import MultiServerMCPClient
+
+client = MultiServerMCPClient({
+    "osf": {"url": "https://api.osf-master-server.com/mcp", "transport": "streamable_http"}
+})
+
+async def main():
+    tools = await client.get_tools()      # all 20 OSF tools as LangChain tools
+    screen = next(t for t in tools if t.name == "search_cyber_threats")
+    print(await screen.ainvoke({"query": "log4j remote code execution"}))
+
+asyncio.run(main())
+```
+
+Bind `tools` to any LangChain chat model or hand them straight to a LangGraph agent.
+
+### Anything else
+
+Any MCP client that speaks streamable HTTP works, because there is no auth handshake to get wrong. If your client only supports SSE, point it at the same URL. If it supports neither, the same data is on a plain HTTP x402 API documented at [`/llms.txt`](https://api.osf-master-server.com/llms.txt) and [`/openapi.json`](https://api.osf-master-server.com/openapi.json).
 
 ## Screen a counterparty in one call
 
