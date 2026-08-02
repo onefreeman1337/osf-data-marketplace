@@ -1,6 +1,6 @@
 # OSF Data Marketplace
 
-**Provenance stamped US government and scientific data for AI agents. Over 7.5 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
+**Provenance stamped US government and scientific data for AI agents. Over 7.6 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
 
 **Install in one paste:** `https://api.osf-master-server.com/mcp` — remote MCP, no key, no account, and 14 of the 20 tools are free. [Jump to your client](#install).
 
@@ -193,6 +193,15 @@ Every record carries a provenance stamp: the originating authority, source URL, 
 ## Data
 
 80 official sources including SEC EDGAR, CourtListener, arXiv, PubMed, openFDA, CISA, the CVE Program, OFAC, SAM.gov, USAspending, the Senate Lobbying Disclosure Act database, the IRS Exempt Organizations Business Master File, Federal Register, FRED, NOAA and EPA. The warehouse refreshes continuously via a collector fleet with daily missions per source.
+
+## Coverage OSF does not have
+
+OSF is United States federal and scientific data. It holds nothing about a European company, a VAT number, or an EU invoice, and an agent should not have to spend a call to discover that. Two independent projects cover ground OSF does not:
+
+- **[eucompliance.tools](https://eucompliance.tools)** — EU VAT rules engine and EN 16931 invoice validation, VIES VAT ID and IBAN checks, EU counterparty checks, on chain transaction preflight. Also x402 v2 on Base with a remote MCP server, no account and no API key, so a wallet that pays OSF pays it too.
+- **[cz-agents](https://github.com/martinhavel/cz-agents-mcp)** — Czech and EU due diligence: ARES company register, ISIR insolvency, ADIS VAT payer reliability, plus business registries for 16 EU countries. MIT licensed MCP servers.
+
+Neither is affiliated with OSF and neither asked to be listed here. Verified live on 2026-08-02.
 
 ## License
 
