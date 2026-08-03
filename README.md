@@ -2,7 +2,7 @@
 
 **Provenance stamped US government and scientific data for AI agents. Over 7.6 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
 
-**Install in one paste:** `https://api.osf-master-server.com/mcp` — remote MCP, no key, no account, and 14 of the 20 tools are free. [Jump to your client](#install).
+**Install in one paste:** `https://api.osf-master-server.com/mcp` — remote MCP, no key, no account, and 15 of the 21 tools are free, including a sanctions and debarment screen. [Jump to your client](#install).
 
 OSF (Open Source Filings) is a live remote MCP server plus an x402 HTTP API. There is nothing to install and nothing to sign up for: an agent with a funded wallet can discover the catalog, get a price quote, pay in USDC, and receive records with full provenance in a single round trip.
 
@@ -20,7 +20,7 @@ OSF is a **remote** MCP server over streamable HTTP. Nothing to download, nothin
 https://api.osf-master-server.com/mcp
 ```
 
-**14 of the 20 tools are free.** Install it, ask it real questions, and decide whether it is worth funding a wallet. Every block below is the complete config for that client. Pick yours, paste it, done.
+**15 of the 21 tools are free**, including `screen_entity_free`, a real sanctions and debarment screen 5 times a day with no signup and no key. Install it, ask it real questions, and decide whether it is worth funding a wallet. Every block below is the complete config for that client. Pick yours, paste it, done.
 
 ### Claude Code
 
@@ -109,7 +109,7 @@ async def main():
 asyncio.run(main())
 ```
 
-That call is free. Swap `search_cyber_threats` for any of the other 12 `search_*` tools, or for `screen_entity` when you want the paid sanctions screen.
+That call is free. Swap `search_cyber_threats` for any of the other 12 `search_*` tools, for `screen_entity_free` when you want a free sanctions and debarment screen, or for `screen_entity` when you want the same screen with no daily cap.
 
 ### LangChain and LangGraph
 
@@ -143,11 +143,19 @@ Any MCP client that speaks streamable HTTP works, because there is no auth hands
 
 ## Screen a counterparty in one call
 
+Free, 5 a day, no signup, no API key, no card. Copy and run this, it returns JSON immediately:
+
+```bash
+curl "https://api.osf-master-server.com/x402/free/screen/sanctions/Wagner%20Group"
+```
+
+Same corpus, same code path, same verdict as the paid route. When the daily allowance is spent it returns HTTP 429 with `charged: false` and the paid URL; it never charges you.
+
 ```bash
 curl "https://api.osf-master-server.com/x402/screen/sanctions/Gazprombank?format=json"
 ```
 
-$0.05. Eleven authorities, 291,000+ listed parties, a provenance URL per match and a sha256 audit receipt. Branch on three outcomes, never two:
+$0.05, no daily cap. Eleven authorities, 291,000+ listed parties, a provenance URL per match, the complete match list and a retainable sha256 audit receipt. Branch on three outcomes, never two:
 
 | `result` | Meaning |
 |---|---|
@@ -157,13 +165,14 @@ $0.05. Eleven authorities, 291,000+ listed parties, a provenance URL per match a
 
 Open Source Filings will not certify a negative it cannot prove. `NO_MATCH` is returned only when the complete candidate set on all 11 authority lists was examined. Every response carries per list `candidate_set_complete` flags, `candidates_examined`, `records_in_scope`, and a sha256 receipt you can retain as evidence of what was checked and when.
 
-## Tools (20)
+## Tools (21)
 
-**14 of the 20 tools are free.** `get_catalog` and all 13 `search_*` tools take no payment at all: they return record_ids, live per record prices and provenance URLs, so an agent can confirm the data it needs exists before spending anything. Only the 6 tools marked with a price charge.
+**15 of the 21 tools are free.** `get_catalog`, `screen_entity_free` and all 13 `search_*` tools take no payment at all: they return record_ids, live per record prices and provenance URLs, so an agent can confirm the data it needs exists before spending anything. Only the 6 tools marked with a price charge.
 
 | Tool | What it does | Price (USDC) |
 |---|---|---|
 | `get_catalog` | Browse the full record catalog with filters | Free |
+| `screen_entity_free` | Sanctions **and debarment** screening across the same eleven authorities as `screen_entity`, 291,000+ listed parties, same provable negative. 5 screens per UTC day, no signup and no key | Free |
 | `search_sec_filings` | SEC EDGAR filings, 13F, Form 4, XBRL, enforcement | Free |
 | `search_legal_cases` | 1.55M+ federal court opinions (SCOTUS all time, all 13 circuits) plus SEC litigation and administrative proceedings | Free |
 | `search_research_papers` | 1.2M+ scholarly works incl. arXiv, PubMed, Crossref | Free |
