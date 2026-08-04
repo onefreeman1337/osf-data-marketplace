@@ -22,6 +22,37 @@ https://api.osf-master-server.com/mcp
 
 **15 of the 21 tools are free**, including `screen_entity_free`, a real sanctions and debarment screen 5 times a day with no signup and no key. Install it, ask it real questions, and decide whether it is worth funding a wallet. Every block below is the complete config for that client. Pick yours, paste it, done.
 
+### One command, any client
+
+There is also a stdio bridge for clients that take a command instead of a URL. Zero
+dependencies, 19 kB, no config and no wallet:
+
+```bash
+npx -y github:onefreeman1337/osf-data-marketplace
+```
+
+Same JSON in every client that uses `mcpServers` — Claude Desktop, Cursor, Cline, Windsurf,
+LibreChat:
+
+```json
+{
+  "mcpServers": {
+    "osf": {
+      "command": "npx",
+      "args": ["-y", "github:onefreeman1337/osf-data-marketplace"]
+    }
+  }
+}
+```
+
+Claude Code: `claude mcp add osf -- npx -y github:onefreeman1337/osf-data-marketplace`.
+VS Code uses `servers` with `"type": "stdio"` and the same `command` and `args`.
+
+**Use this when the remote URL will not go in.** Claude Desktop's
+`claude_desktop_config.json` takes local commands only, so a remote MCP URL pasted into it
+silently does nothing — a command line works everywhere a config file does. Source for the
+bridge is [`bin/cli.js`](bin/cli.js) in this repo.
+
 ### Claude Code
 
 ```bash

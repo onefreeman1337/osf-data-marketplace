@@ -1,0 +1,55 @@
+{
+  "name": "osf-data-marketplace",
+  "version": "1.0.0",
+  "mcpName": "io.github.onefreeman1337/osf-data-marketplace",
+  "description": "MCP server for OSF - Open Source Filings. 15 free tools with no wallet and no signup: sanctions and debarment screening against 11 authorities, SEC filings, CVE and KEV, federal spending, patents, research papers and more. 6 paid tools over x402 USDC on Base.",
+  "type": "commonjs",
+  "main": "bin/cli.js",
+  "bin": {
+    "osf-data-marketplace": "bin/cli.js",
+    "osf-mcp": "bin/cli.js"
+  },
+  "files": [
+    "bin/cli.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "x402",
+    "ai-agents",
+    "claude-desktop",
+    "claude-code",
+    "cursor",
+    "tools",
+    "usdc",
+    "base",
+    "sanctions",
+    "ofac",
+    "screening",
+    "compliance",
+    "kyb",
+    "sec-edgar",
+    "government-data",
+    "cve",
+    "osf"
+  ],
+  "license": "MIT",
+  "homepage": "https://api.osf-master-server.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onefreeman1337/osf-data-marketplace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onefreeman1337/osf-data-marketplace/issues"
+  },
+  "author": "Open Source Filings",
+  "dependencies": {},
+  "scripts": {
+    "start": "node bin/cli.js"
+  }
+}
