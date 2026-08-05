@@ -277,12 +277,37 @@ async function forward(message) {
 // Serialize everything until a session exists (the initialize round trip), then
 // let requests run concurrently so one slow paid call cannot block a tools/list.
 let gate = Promise.resolve();
+
+// In-flight accounting exists so a CLOSED stdin cannot kill requests that have not
+// answered yet. An interactive client (Claude Desktop, Cursor) holds stdin open for
+// the whole session, but a piped or heredoc-driven client - which is how CI, smoke
+// tests and `echo ... | npx osf-data-marketplace` drive it - reaches end-of-stdin
+// immediately, long before the first fetch returns. Exiting there produced a silent
+// zero-byte reply with exit code 0.
+let inFlight = 0;
+let stdinEnded = false;
+
+function finishExit() {
+  // process.exit() can truncate a piped stdout that still has queued writes.
+  if (process.stdout.writableLength === 0) process.exit(0);
+  else process.stdout.once('drain', () => process.exit(0));
+}
+
+function maybeExit() {
+  if (stdinEnded && inFlight === 0) finishExit();
+}
+
 function dispatch(message) {
+  inFlight += 1;
+  const done = () => {
+    inFlight -= 1;
+    maybeExit();
+  };
   if (!sessionId || message.method === 'initialize') {
-    gate = gate.then(() => forward(message)).catch(() => {});
+    gate = gate.then(() => forward(message)).catch(() => {}).finally(done);
     return;
   }
-  forward(message).catch(() => {});
+  forward(message).catch(() => {}).finally(done);
 }
 
 // ---------------------------------------------------------------- stdio loop
@@ -308,7 +333,16 @@ process.stdin.on('data', (chunk) => {
   }
 });
 
-process.stdin.on('end', () => process.exit(0));
+process.stdin.on('end', () => {
+  stdinEnded = true;
+  if (inFlight === 0) {
+    finishExit();
+    return;
+  }
+  // Backstop: every request is already bounded by TIMEOUT_MS, so this can only fire
+  // if something is wedged. unref() so it never keeps an idle process alive.
+  setTimeout(() => process.exit(0), TIMEOUT_MS + 5000).unref();
+});
 process.on('SIGINT', () => process.exit(0));
 process.on('SIGTERM', () => process.exit(0));
 
