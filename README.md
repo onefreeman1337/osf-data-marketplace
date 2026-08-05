@@ -2,6 +2,8 @@
 
 **Provenance stamped US government and scientific data for AI agents. Over 8.1 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
 
+**The screen most sanctions APIs cannot do.** OSF holds **259,803 federal debarment and exclusion records** and screens them in the same call as sanctions: 168,106 SAM.gov federal contracting exclusions, 83,600 HHS OIG LEIE healthcare exclusions, plus World Bank debarment and Federal Reserve enforcement, alongside OFAC SDN and Consolidated, EU, UK, UN, Trade.gov CSL and FBI Wanted. Eleven authorities, one call. If your agent needs to know whether a vendor is barred from federal contracting or a provider is excluded from Medicare and Medicaid, that is a question a sanctions list cannot answer and this one can. Try it with no wallet and no signup: `npx osf-data-marketplace`, or `curl "https://api.osf-master-server.com/x402/free/screen/sanctions/Acme%20Medical%20Supply%20LLC"`.
+
 **Install in one paste:** `https://api.osf-master-server.com/mcp` — remote MCP, no key, no account, and 15 of the 21 tools are free, including a sanctions and debarment screen. [Jump to your client](#install).
 
 OSF (Open Source Filings) is a live remote MCP server plus an x402 HTTP API. There is nothing to install and nothing to sign up for: an agent with a funded wallet can discover the catalog, get a price quote, pay in USDC, and receive records with full provenance in a single round trip.
