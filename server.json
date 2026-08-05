@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.onefreeman1337/osf-data-marketplace",
-  "description": "7.0M+ US gov and science data via x402 USDC. 21 tools, $0.001 sample tier, sanctions, SEC, CVEs.",
-  "version": "2.0.7",
+  "description": "8.1M+ US gov and science data via x402 USDC. 21 tools, $0.001 sample tier, sanctions, SEC, CVEs.",
+  "version": "2.0.8",
   "remotes": [
     {
       "type": "streamable-http",
@@ -14,7 +14,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "osf-data-marketplace",
-      "version": "1.0.0",
+      "version": "1.0.2",
       "transport": {
         "type": "stdio"
       }

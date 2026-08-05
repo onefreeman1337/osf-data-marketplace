@@ -1,8 +1,8 @@
 {
   "name": "osf-data-marketplace",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "mcpName": "io.github.onefreeman1337/osf-data-marketplace",
-  "description": "MCP server for OSF - Open Source Filings. 15 free tools with no wallet and no signup: sanctions and debarment screening against 11 authorities, SEC filings, CVE and KEV, federal spending, patents, research papers and more. 6 paid tools over x402 USDC on Base.",
+  "description": "MCP server for OSF, Open Source Filings. Federal debarment and exclusion screening that sanctions APIs do not cover: 259,803 SAM.gov exclusions, HHS OIG LEIE healthcare exclusions, World Bank debarment and Federal Reserve enforcement, screened alongside OFAC, EU, UK and UN sanctions in one call across 11 authorities. Plus SEC filings, CVE and KEV, federal spending, patents and research. 15 of 21 tools free, no wallet and no signup.",
   "type": "commonjs",
   "main": "bin/cli.js",
   "bin": {
@@ -36,7 +36,19 @@
     "sec-edgar",
     "government-data",
     "cve",
-    "osf"
+    "osf",
+    "debarment",
+    "sam-gov",
+    "leie",
+    "exclusions",
+    "excluded-parties",
+    "vendor-screening",
+    "procurement",
+    "medicare-exclusion",
+    "supplier-risk",
+    "due-diligence",
+    "aml",
+    "ofac-sdn"
   ],
   "license": "MIT",
   "homepage": "https://api.osf-master-server.com",
