@@ -28,7 +28,7 @@ There is also a stdio bridge for clients that take a command instead of a URL. Z
 dependencies, 19 kB, no config and no wallet:
 
 ```bash
-npx -y github:onefreeman1337/osf-data-marketplace
+npx -y osf-data-marketplace
 ```
 
 Same JSON in every client that uses `mcpServers` — Claude Desktop, Cursor, Cline, Windsurf,
@@ -39,13 +39,13 @@ LibreChat:
   "mcpServers": {
     "osf": {
       "command": "npx",
-      "args": ["-y", "github:onefreeman1337/osf-data-marketplace"]
+      "args": ["-y", "osf-data-marketplace"]
     }
   }
 }
 ```
 
-Claude Code: `claude mcp add osf -- npx -y github:onefreeman1337/osf-data-marketplace`.
+Claude Code: `claude mcp add osf -- npx -y osf-data-marketplace`.
 VS Code uses `servers` with `"type": "stdio"` and the same `command` and `args`.
 
 **Use this when the remote URL will not go in.** Claude Desktop's
