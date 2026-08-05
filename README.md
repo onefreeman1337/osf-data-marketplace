@@ -1,6 +1,6 @@
 # OSF Data Marketplace
 
-**Provenance stamped US government and scientific data for AI agents. Over 7.6 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
+**Provenance stamped US government and scientific data for AI agents. Over 8.1 million records across 80 official sources, sold per call with x402 USDC micropayments on Base.**
 
 **Install in one paste:** `https://api.osf-master-server.com/mcp` — remote MCP, no key, no account, and 15 of the 21 tools are free, including a sanctions and debarment screen. [Jump to your client](#install).
 
